@@ -2,7 +2,7 @@ Option Public
 Option Declare
 
 Class JSONParser
-	Private m_length As Integer
+	Private m_length As long
 	Private m_decimalSep As String
 	
 	Sub New()
@@ -21,14 +21,14 @@ Class JSONParser
 		getDecimalSep = m_decimalSep
 	End Property
 	
-	private Property Get length As integer
+	private Property Get length As long
 		length = m_length
 	End Property
 	
 	Function parse(jsonString As string) As variant
 		Dim res As Variant
-		Dim index1 As Integer
-		Dim index2 As Integer
+		Dim index1 As long
+		Dim index2 As Long
 		
 		m_length = Len(jsonString)
 		
@@ -44,12 +44,12 @@ Class JSONParser
 		Set parse = res
 	End Function
 	
-	Private Function parseObject(jsonString As String, index As integer) As JSONObject
+	Private Function parseObject(jsonString As String, index As long) As JSONObject
 		Dim res As JSONObject
 		Dim propertyValue As Variant
 		Dim propertyName As String
-		Dim objectEnd As Integer
-		Dim nextPair As integer
+		Dim objectEnd As long
+		Dim nextPair As long
 
 		Set res = New JSONObject()
 
@@ -72,11 +72,11 @@ Class JSONParser
 		Set parseObject = res
 	End Function
 	
-	Private Function parseArray(jsonString As String, index As Integer) As JSONArray
+	Private Function parseArray(jsonString As String, index As long) As JSONArray
 		Dim res As JSONArray
 		Dim propertyValue As Variant
-		Dim arrEnd As Integer
-		Dim nextVal As Integer
+		Dim arrEnd As long
+		Dim nextVal As long
 
 		Set res = New JSONArray()
 		
@@ -95,9 +95,9 @@ Class JSONParser
 		Set parseArray = res
 	End Function
 	
-	Private Function renderValue(jsonString As String, index As Integer, propertyValue As Variant) As Variant
+	Private Function renderValue(jsonString As String, index As long, propertyValue As Variant) As Variant
 		Dim char As String
-		Dim i As Integer
+		Dim i As long
 		
 		For i = index To length
 			char = Mid(jsonString, i, 1)
@@ -126,11 +126,11 @@ Class JSONParser
 		Next
 	End Function
 	
-	Private Function findElementNumber(jsonString As string, index As Integer) As variant
+	Private Function findElementNumber(jsonString As string, index As long) As variant
 		Dim res As variant
 		Dim elementEnd As String
 		Dim char As string
-		Dim i As integer
+		Dim i As long
 		
 		elementEnd = |, ]}|	'to catch: close bracket, comma, space or }
 		For i = index To length
@@ -150,11 +150,11 @@ Class JSONParser
 		findElementNumber = cdbl(res)
 	End Function
 	
-	Private Function findElementLiteral(jsonString As String, index As Integer) As Variant
+	Private Function findElementLiteral(jsonString As String, index As long) As Variant
 		Dim res As string
 		Dim elementEnd As String
 		Dim char As String
-		Dim i As Integer
+		Dim i As long
 		
 		elementEnd = |, ]}|	'to catch: close bracket, comma, space or }
 		For i = index To length
@@ -178,10 +178,10 @@ Class JSONParser
 	End Function
 	
 	'find element in json string
-	Private Function findElementString(jsonString As String, index As Integer) As String
+	Private Function findElementString(jsonString As String, index As long) As String
 		Dim res As String
-		Dim index1 As Integer
-		Dim index2 As Integer
+		Dim index1 As long
+		Dim index2 As long
 		
 		index1 = InStr(index, jsonString, {"})
 		If index1 = 0 Then Exit Function
@@ -196,11 +196,11 @@ Class JSONParser
 	End Function
 	
 	'find property name
-	Private Function findPropertyName(jsonString As String, index As Integer) As String
+	Private Function findPropertyName(jsonString As String, index As long) As String
 		Dim res As String
 		Dim propertyNameEnd As String
 		Dim char As String
-		Dim i As Integer
+		Dim i As long
 		
 		'property start with character
 		For i = index To length
@@ -263,7 +263,7 @@ End Class
 
 Class JSONArray
 	Private m_items() As Variant
-	Private m_size As integer
+	Private m_size As long
 
 	Sub New()
 	End Sub
@@ -272,7 +272,7 @@ Class JSONArray
 		Items = Me.m_items
 	End Property
 	
-	Public Property Get Size As integer
+	Public Property Get Size As long
 		Size = Me.m_size
 	End Property
 	

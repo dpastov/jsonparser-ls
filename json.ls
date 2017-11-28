@@ -229,7 +229,6 @@ Class JSONParser
 		findPropertyName = res
 	End Function
 End Class
-
 Class JSONObject
 	Private m_items List As Variant
 	
@@ -248,8 +247,12 @@ Class JSONObject
 		End If
 	End Sub
 	
+	Public Function HasItem(itemName As String) As Variant
+		HasItem = IsElement(m_items(itemName))
+	End Function
+	
 	Public Function GetItem(itemName As String) As Variant
-		If IsElement(m_items(itemName)) Then
+		If HasItem(itemName) Then
 			If IsObject(me.Items(itemName)) Then
 				Set GetItem = me.Items(itemName)
 			Else

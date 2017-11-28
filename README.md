@@ -14,6 +14,8 @@ Here is an example how to use JSONParser.
 	jsonString = |{"array":[1,  2  ,   300.56  ]  ,  "boolean":true,"null":null,"number":123,"object":{"a":"b","c":"d","arr":["12","23",34.56],"e":"f","ho":true},"string":"Hello World"}|
 	Set jsonObj = parser.parse(jsonString)
 	'test
+	Print jsonObj.HasItem("array") 'true
+	Print jsonObj.HasItem("array1") 'false
 	print jsonObj.GetItem("array").Items(2) '300.56
 	print IsNull(jsonObj.GetItem("null")) 'true
 	print jsonObj.GetItem("number") '123

@@ -72,23 +72,25 @@ Class JSONParser
 		Set parseObject = res
 	End Function
 	
-	Private Function parseArray(jsonString As String, index As long) As JSONArray
+	Private Function parseArray(jsonString As String, index As Long) As JSONArray
 		Dim res As JSONArray
 		Dim propertyValue As Variant
-		Dim arrEnd As long
-		Dim nextVal As long
+		Dim arrEnd As Long
+		Dim nextVal As Long
 
 		Set res = New JSONArray()
-		
 		nextVal = InStr(index, jsonString, ",")
 		arrEnd = InStr(index, jsonString, "]")
-		While nextVal < arrEnd And nextVal > 0 And arrEnd > 0
+		
+		Do
 			Call renderValue(jsonString, index, propertyValue)
-			Call res.AddItem(propertyValue)
+			If Not IsEmpty(propertyValue) Then
+				Call res.AddItem(propertyValue)
+			End If
 			
 			nextVal = InStr(index, jsonString, ",")
 			arrEnd = InStr(index, jsonString, "]")
-		Wend
+		Loop While nextVal < arrEnd And nextVal > 0 And arrEnd > 0
 		
 		index = arrEnd + 1
 		

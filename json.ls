@@ -108,7 +108,7 @@ Class JSONParser
 				index = i
 				propertyValue = findElementString(jsonString, index)
 				i = length
-			ElseIf char Like {#} Then
+			ElseIf char Like {#} Or char = {-} Then
 				index = i
 				propertyValue = findElementNumber(jsonString, index)
 				i = length

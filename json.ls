@@ -182,13 +182,18 @@ Class JSONParser
 	'find element in json string
 	Private Function findElementString(jsonString As String, index As long) As String
 		Dim res As String
+		Dim prevIndex2 As string
 		Dim index1 As long
 		Dim index2 As long
 		
 		index1 = InStr(index, jsonString, {"})
 		If index1 = 0 Then Exit Function
 		
-		index2 = InStr(index1 + 1, jsonString, {"})
+		index2 = index1
+		Do
+			index2 = InStr(index2 + 1, jsonString, {"})
+			prevIndex2 = Mid(jsonString, index2 - 1, 1)
+		Loop While prevIndex2 = "\"
 
 		res = Mid(jsonString, index1 + 1, index2 - index1 - 1)
 		

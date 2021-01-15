@@ -75,13 +75,23 @@ Class JSONParser
 	Private Function parseArray(jsonString As String, index As Long) As JSONArray
 		Dim res As JSONArray
 		Dim propertyValue As Variant
+		Dim arrString As string
 		Dim arrEnd As Long
 		Dim nextVal As Long
 
 		Set res = New JSONArray()
-		nextVal = InStr(index, jsonString, ",")
+
+		'empty array
 		arrEnd = InStr(index, jsonString, "]")
-		
+		If arrEnd > 0 Then
+			arrString = Mid(jsonString, index, arrEnd - index)
+			If Trim(arrString) = "" Then
+				Set parseArray = res
+				Exit Function
+			End If
+		End If
+
+		nextVal = InStr(index, jsonString, ",")
 		Do
 			Call renderValue(jsonString, index, propertyValue)
 			If Not IsEmpty(propertyValue) Then
